@@ -1,0 +1,48 @@
+{% load staticfiles %}
+{% load i18n %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link href="{% static "polls/style.css" %}" rel="stylesheet" media="screen">
+    <link href="{% static "bootstrap/css/bootstrap.css" %}" rel="stylesheet" media="screen">
+    <script src="{% static "jquery.js" %}"></script>
+    <script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
+</head>
+<body>
+    <div id="main" class="container">
+        <nav class="navbar navbar-default" role="navigation">
+          <div class="container-fluid">
+              <div class="navbar-header">
+                  <div class="navbar-brand" >{% trans "Любителям печенек" %}</div>
+              </div>
+              <ul class="nav navbar-nav">
+                <li><a href="{% url 'polls:index' %}">{% trans "Главная" %}</a></li>
+                <li><a href="{% url 'polls:cookies' %}">{% trans "Печеньки" %}</a></li>
+              </ul>
+              <form method="post" action="{% url 'polls:search' %}" class="navbar-form navbar-right" role="search">
+                  {% csrf_token %}
+                  <div class="form-group">
+                    <input name="search" type="text" class="form-control" placeholder="{% trans "Название печеньки" %}" />
+                  </div>
+                  <button type="submit" class="btn btn-default" value="find">{% trans "Найти" %}</button>
+              </form>
+
+              <form method="post" action="" class="navbar-form navbar-right" role="search">
+                  {% csrf_token %}
+                  <div class="btn-group">
+                      <select class="btn" name="language">
+                        {% get_language_info_list for LANGUAGES as languages %}
+                        {% for language in languages %}
+                        <option  value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected="selected"{% endif %}>
+                            {{ language.name_local }} ({{ language.code }})
+                        </option>
+                        {% endfor %}
+                      </select>
+                  </div>
+                  <button type="submit" class="btn" value="find">{% trans "Перевести" %}</button>
+              </form>
+
+          </div>
+        </nav>

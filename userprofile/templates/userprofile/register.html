@@ -1,0 +1,17 @@
+{% extends 'polls/base.html' %}
+{% load staticfiles %}
+        {% block page_name %}Регистрация{% endblock %}
+        {% block posts %}
+<div class="col-md-4" ></div>
+<div class="col-md-6" >
+    <form action="{% url 'userprofile:register' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <p class="error">{{ err_msg }}</p>
+            {{ userCrtForm }}
+        <br/>
+        <p><input type="submit" class="btn btn-primary fullwidth" name="save" value="Сохранить"/></p>
+
+    </form>
+</div>
+<div class="col-md-2" ></div>
+        {% endblock %}
